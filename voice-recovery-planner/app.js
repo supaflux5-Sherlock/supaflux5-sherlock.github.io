@@ -68,7 +68,7 @@
   });
 
   // set default dates
-  ["daily-date", "journal-date", "caregiver-date"].forEach((id) => {
+  ["daily-date", "journal-date", "caregiver-date", "dietary-date"].forEach((id) => {
     const el = document.getElementById(id);
     if (el && !el.value) el.value = todayISO();
   });
@@ -219,8 +219,8 @@
     alert("Device care info saved.");
   });
 
-  // ---------- Editable tables (appointments / medications) ----------
-  function setupTable(tableId, storageKey, columns) {
+  // ---------- Editable tables (appointments / medications / bloodwork) ----------
+  function setupTable(tableId, storageKey, columns, addKey) {
     const tbody = document.querySelector(`#${tableId} tbody`);
     let rows = load(storageKey, []);
 
@@ -271,28 +271,82 @@
 
     render();
 
-    document.querySelector(`[data-add="${storageKey === "appointmentRows" ? "appointments" : "medications"}"]`)
-      .addEventListener("click", () => {
-        rows.push({});
-        persist();
-        render();
-      });
+    document.querySelector(`[data-add="${addKey}"]`).addEventListener("click", () => {
+      rows.push({});
+      persist();
+      render();
+    });
   }
 
-  setupTable("appointments-table", "appointmentRows", [
-    { key: "date", type: "date" },
-    { key: "provider", placeholder: "Provider / Type" },
-    { key: "reason", placeholder: "Reason" },
-    { key: "followup", placeholder: "Follow-up?" },
-  ]);
+  setupTable(
+    "appointments-table",
+    "appointmentRows",
+    [
+      { key: "date", type: "date" },
+      { key: "provider", placeholder: "Provider / Type" },
+      { key: "reason", placeholder: "Reason" },
+      { key: "followup", placeholder: "Follow-up?" },
+    ],
+    "appointments"
+  );
 
-  setupTable("medications-table", "medicationRows", [
-    { key: "medication", placeholder: "Medication" },
-    { key: "dose", placeholder: "Dose" },
-    { key: "time", placeholder: "Time" },
-    { key: "taken", type: "checkbox" },
-    { key: "notes", placeholder: "Notes" },
-  ]);
+  setupTable(
+    "medications-table",
+    "medicationRows",
+    [
+      { key: "medication", placeholder: "Medication" },
+      { key: "dose", placeholder: "Dose" },
+      { key: "time", placeholder: "Time" },
+      { key: "taken", type: "checkbox" },
+      { key: "notes", placeholder: "Notes" },
+    ],
+    "medications"
+  );
+
+  setupTable(
+    "bloodwork-table",
+    "bloodworkRows",
+    [
+      { key: "date", type: "date" },
+      { key: "test", placeholder: "Test (e.g. Hemoglobin)" },
+      { key: "result", placeholder: "Result" },
+      { key: "range", placeholder: "Normal range" },
+      { key: "notes", placeholder: "Notes" },
+    ],
+    "bloodwork"
+  );
+
+  // ---------- Dietary (dated entries) ----------
+  // Note: the feeding-method checklist below is already wired up by the generic
+  // ".checklist input[data-key]" handler near the top of this file.
+  setupDatedForm({
+    saveKey: "dietary",
+    storageKey: "dietaryEntries",
+    historyId: "dietary-history",
+    collect() {
+      const checks = {};
+      document.querySelectorAll("#dietary-checklist input[type=checkbox]").forEach((cb) => {
+        checks[cb.dataset.key] = cb.checked;
+      });
+      return {
+        date: document.getElementById("dietary-date").value || todayISO(),
+        checks,
+        notes: document.getElementById("dietary-notes").value,
+      };
+    },
+    reset() {
+      document.getElementById("dietary-notes").value = "";
+    },
+    renderEntry(e) {
+      const methods = Object.entries(e.checks || {})
+        .filter(([, v]) => v)
+        .map(([k]) => k.replace("dietary-", "").replace(/-/g, " "))
+        .join(", ");
+      return `<div class="entry-date">${e.date}</div>
+        <div>${methods ? "Feeding: " + methods : ""}</div>
+        <div>${e.notes ? e.notes : ""}</div>`;
+    },
+  });
 
   // ---------- Milestones ----------
   const MILESTONES = [

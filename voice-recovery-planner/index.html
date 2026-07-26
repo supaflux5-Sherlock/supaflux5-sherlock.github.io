@@ -20,6 +20,8 @@
   <div class="wrap tabs-scroll">
     <button class="tab active" data-tab="daily">Daily Tracker</button>
     <button class="tab" data-tab="device">Device Care</button>
+    <button class="tab" data-tab="dietary">Dietary</button>
+    <button class="tab" data-tab="bloodwork">Bloodwork</button>
     <button class="tab" data-tab="appointments">Appointments</button>
     <button class="tab" data-tab="medications">Medications</button>
     <button class="tab" data-tab="journal">Symptom Journal</button>
@@ -64,6 +66,14 @@
     <h2>Voice Device Care Schedule</h2>
     <p class="subtitle">Daily cleaning, weekly refurbishing, and resupply — never miss a step</p>
 
+    <p class="field-label">Which device(s) do you use?</p>
+    <div class="checklist" id="device-type-checklist">
+      <label><input type="checkbox" data-key="devicetype-laryngectomy"> Laryngectomy (stoma / HME)</label>
+      <label><input type="checkbox" data-key="devicetype-tep"> TEP (voice prosthesis)</label>
+      <label><input type="checkbox" data-key="devicetype-avavoice"> Ava Voice</label>
+      <label><input type="checkbox" data-key="devicetype-mira"> Mira</label>
+    </div>
+
     <div class="card">
       <h3>Today</h3>
       <label><input type="checkbox" id="device-cleaned-today"> Cleaned overnight (before bed)</label>
@@ -88,6 +98,47 @@
       <textarea id="device-notes" rows="4" placeholder="Any issues with the device this week..."></textarea>
     </label>
     <button class="save-btn" data-save="device">Save</button>
+  </section>
+
+  <!-- DIETARY -->
+  <section id="dietary" class="panel">
+    <h2>Dietary</h2>
+    <p class="subtitle">Track how you're getting nutrition today — by mouth, feeding tube, or IV</p>
+    <label class="field">Date
+      <input type="date" id="dietary-date">
+    </label>
+    <p class="field-label">Feeding method today</p>
+    <div class="checklist" id="dietary-checklist">
+      <label><input type="checkbox" data-key="dietary-mouth"> Feeding by mouth</label>
+      <label><input type="checkbox" data-key="dietary-tube"> Feeding tube</label>
+      <label><input type="checkbox" data-key="dietary-iv"> IV</label>
+    </div>
+    <label class="field">Notes (what/how much, tolerance, any issues)
+      <textarea id="dietary-notes" rows="4" placeholder="What you ate or how feeding went today..."></textarea>
+    </label>
+    <button class="save-btn" data-save="dietary">Save Today's Entry</button>
+    <div class="history" id="dietary-history"></div>
+  </section>
+
+  <!-- BLOODWORK -->
+  <section id="bloodwork" class="panel">
+    <h2>Bloodwork Tracking</h2>
+    <p class="subtitle">Focused on anemia and vitamin/mineral/kidney (renal) function</p>
+    <p class="field-label">Common tests worth asking your doctor about</p>
+    <div class="checklist" id="bloodwork-checklist">
+      <label><input type="checkbox" data-key="bloodwork-hgb"> Hemoglobin / Hematocrit (anemia)</label>
+      <label><input type="checkbox" data-key="bloodwork-iron"> Iron / Ferritin</label>
+      <label><input type="checkbox" data-key="bloodwork-b12"> Vitamin B12 / Folate</label>
+      <label><input type="checkbox" data-key="bloodwork-vitd"> Vitamin D</label>
+      <label><input type="checkbox" data-key="bloodwork-calcmag"> Calcium / Magnesium / Zinc</label>
+      <label><input type="checkbox" data-key="bloodwork-renal"> Creatinine / eGFR / BUN (kidney/renal function)</label>
+      <label><input type="checkbox" data-key="bloodwork-electrolytes"> Potassium / Sodium</label>
+    </div>
+    <table class="log-table" id="bloodwork-table">
+      <thead><tr><th>Date</th><th>Test</th><th>Result</th><th>Normal range</th><th>Notes</th><th></th></tr></thead>
+      <tbody></tbody>
+    </table>
+    <button class="add-row-btn" data-add="bloodwork">+ Add result</button>
   </section>
 
   <!-- APPOINTMENTS -->
