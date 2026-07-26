@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ben Watson</title>
+<meta name="description" content="Ben Watson — Python/AI developer, 40-year video &amp; broadcast engineer, laryngectomy survivor and patient advocate.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <span class="brand">Ben Watson</span>
+    <nav>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#career">Career</a>
+      <a href="#story">My Story</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Ben Watson</h1>
+    <p class="tagline">40 years behind the scenes in live broadcast and audio — now building
+      and debugging Python &amp; AI systems, and telling my story as a laryngectomy survivor
+      and patient advocate.</p>
+  </div>
+</section>
+
+<section id="portfolio" class="section">
+  <div class="wrap">
+    <h2>Dev Portfolio</h2>
+    <p>I fix Python and ML pipelines that break on real-world hardware and dependency
+      mismatches — the stuff that works in the tutorial and fails on your actual machine.
+      I read source code instead of guessing when something doesn't add up, and I document
+      what broke and why, not just that it's "fixed now."</p>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Debugging a legacy voice-cloning pipeline on unsupported hardware</h3>
+        <p>Got a 2023-era voice-conversion toolkit (RVC) running from scratch on an
+          unsupported configuration — an Intel Mac with no CUDA GPU, against modern
+          library versions the project was never tested on. Root-caused five separate
+          breakages: a changed PyAV API, a hardcoded CUDA-only device call with no CPU
+          fallback, a genuine logging bug in the project's own error-handling path, and a
+          removed matplotlib API — then pinned the right combination of Python/PyTorch
+          versions to make the whole chain work together. Verified end to end with a real
+          training run producing a working exported model.</p>
+      </div>
+      <div class="card">
+        <h3>Root-causing a deadlock in an async Python SDK</h3>
+        <p>Traced a hang in the Claude Agent SDK to an unbounded wait on a CLI
+          control-response acknowledgment, by reading the actual library source rather
+          than guessing. Built a standalone reproduction first to confirm the diagnosis,
+          then fixed it with proper timeout handling before shipping.</p>
+      </div>
+    </div>
+
+    <h3 class="skills-heading">Skills</h3>
+    <ul class="skills">
+      <li>Python</li>
+      <li>Debugging</li>
+      <li>API Integration</li>
+      <li>Machine Learning</li>
+      <li>PyTorch</li>
+      <li>Audio Processing</li>
+      <li>Speech Recognition</li>
+      <li>Async Programming</li>
+      <li>Dependency Management</li>
+      <li>Legacy Code</li>
+      <li>Automation</li>
+      <li>macOS Development</li>
+    </ul>
+  </div>
+</section>
+
+<section id="career" class="section alt">
+  <div class="wrap">
+    <h2>Career Highlights</h2>
+    <p>Two parallel careers, running concurrently for over 30 years: live video/broadcast
+      production, and audio engineering at independent music venues.</p>
+
+    <ul class="highlights">
+      <li><strong>HBO's <em>The Wire</em></strong> — Film Electronics / Sound Utility / 2nd
+        Boom, Seasons 3–5.</li>
+      <li><strong>Presidential Inaugurations</strong> — worked every Presidential
+        Inauguration since 1983 through Inauguration 44.</li>
+      <li><strong>Keystone Korner (Baltimore)</strong> — audio engineer at the Baltimore
+        revival of the legendary jazz club, Baltimore's first full-time jazz home in 30+
+        years.</li>
+      <li><strong>NFL Kickoff 2002</strong> — Site Coordinator for the national live
+        broadcast opening the season, featuring Mary J. Blige, Britney Spears, Aretha
+        Franklin, and Aerosmith.</li>
+      <li><strong>The Grog &amp; Tankard (Baltimore)</strong> — venue that hosted national
+        touring acts including Nine Inch Nails and Concrete Blonde.</li>
+      <li><strong>America's Most Wanted</strong> — Director for reenactments, 1998–2007.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="story" class="section">
+  <div class="wrap">
+    <h2>My Story</h2>
+    <p>On November 21, 2022, a total laryngectomy — surgery to remove throat cancer — took
+      my voice. I was one of the first people in the United States to use the
+      <strong>Ava Voice</strong> device, made by Laronix, at Greater Baltimore Medical
+      Center (GBMC). It restored natural-sounding speech without another surgery.</p>
+    <p>I was declared cancer-free roughly ten months after the laryngectomy, and remain
+      cancer-free today. Getting my voice back changed how I connect with the people I
+      love — and I'm sharing my story to help other laryngectomy patients know what's
+      possible.</p>
+
+    <h3 class="press-heading">Press coverage</h3>
+    <ul class="press">
+      <li><a href="https://www.thebanner.com/economy/science-medicine/larynx-cancer-ava-voice-EXRFNOXH5ZARFEVDVTDTGTJTT4/" target="_blank" rel="noopener">The Baltimore Banner — "New technology helps people get their voices back. Marylanders are among the first to use it."</a></li>
+      <li><a href="https://www.wmar2news.com/local/musician-speaks-again-gbmc-first-in-the-country-to-offer-noninvasive-voice-solution" target="_blank" rel="noopener">WMAR-2 News — "Musician speaks again, GBMC first in the country to offer noninvasive voice solution"</a></li>
+    </ul>
+  </div>
+</section>
+
+<footer id="contact" class="section alt">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <p><a href="mailto:supaflux5@gmail.com">supaflux5@gmail.com</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
