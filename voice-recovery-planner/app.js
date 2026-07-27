@@ -220,12 +220,13 @@
   });
 
   // ---------- Editable tables (appointments / medications / bloodwork) ----------
-  function setupTable(tableId, storageKey, columns, addKey) {
+  function setupTable(tableId, storageKey, columns, addKey, onChange) {
     const tbody = document.querySelector(`#${tableId} tbody`);
     let rows = load(storageKey, []);
 
     function persist() {
       save(storageKey, rows);
+      if (onChange) onChange();
     }
 
     function renderRow(row, index) {
@@ -287,7 +288,8 @@
       { key: "reason", placeholder: "Reason" },
       { key: "followup", placeholder: "Follow-up?" },
     ],
-    "appointments"
+    "appointments",
+    () => window.__vrpSyncReminders && window.__vrpSyncReminders()
   );
 
   setupTable(
@@ -300,7 +302,8 @@
       { key: "taken", type: "checkbox" },
       { key: "notes", placeholder: "Notes" },
     ],
-    "medications"
+    "medications",
+    () => window.__vrpSyncReminders && window.__vrpSyncReminders()
   );
 
   setupTable(

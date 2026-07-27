@@ -52,6 +52,31 @@ body {
   flex-wrap: wrap;
 }
 
+.reminders-bar {
+  background: var(--bg-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.reminders-bar .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 1.25rem;
+  flex-wrap: wrap;
+}
+
+#reminders-status {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.save-btn.small {
+  margin-bottom: 0;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.85rem;
+}
+
 .brand {
   color: var(--text-muted);
   text-decoration: none;
