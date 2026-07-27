@@ -19,13 +19,13 @@
   --border: #c9dedc;
   --border-strong: #9cc2be;
 
-  /* accent: clinical bio-teal */
-  --accent: #0e9c87;
-  --accent-strong: #087a6a;
-  --accent-glow: rgba(14, 156, 135, 0.35);
-  --on-accent: #f4fffc;
+  /* accent: clinical blue */
+  --accent: #1b63d6;
+  --accent-strong: #144fb0;
+  --accent-glow: rgba(27, 99, 214, 0.35);
+  --on-accent: #f4f9ff;
 
-  /* semantic — deliberately distinct hues from the accent */
+  /* semantic — ok reuses the blue family; warn/crit stay distinct */
   --ok: #1c6feb;
   --ok-glow: rgba(28, 111, 235, 0.35);
   --warn: #c97f1e;
@@ -50,10 +50,10 @@
     --border: #1e3a3b;
     --border-strong: #2c5252;
 
-    --accent: #22f1cb;
-    --accent-strong: #5bffdf;
-    --accent-glow: rgba(34, 241, 203, 0.35);
-    --on-accent: #04120f;
+    --accent: #4fa8ff;
+    --accent-strong: #7cc4ff;
+    --accent-glow: rgba(79, 168, 255, 0.35);
+    --on-accent: #041224;
 
     --ok: #4ea8ff;
     --ok-glow: rgba(78, 168, 255, 0.35);
