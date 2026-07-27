@@ -89,13 +89,16 @@
   function updateStatus() {
     const statusEl = document.getElementById("reminders-status");
     const toggleEl = document.getElementById("reminders-toggle");
+    const dotEl = document.getElementById("reminders-dot");
     const enabled = localStorage.getItem(ENABLED_KEY) === "true";
     if (enabled) {
       statusEl.textContent = "Reminders are on — appointments & medications";
       toggleEl.textContent = "Re-sync now";
+      dotEl.classList.add("active");
     } else {
       statusEl.textContent = "Reminders are off";
       toggleEl.textContent = "Enable reminders";
+      dotEl.classList.remove("active");
     }
   }
 

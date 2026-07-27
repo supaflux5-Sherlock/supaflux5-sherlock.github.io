@@ -1,59 +1,152 @@
+/* ============================================================
+   Voice Recovery Planner — "bedside monitor" design system
+   Palette: cool porcelain / abyss-navy grounds, bio-teal accent.
+   Type: IBM Plex Sans (display/body) + IBM Plex Mono (readouts).
+   ============================================================ */
+
 :root {
-  --bg: #ffffff;
-  --bg-alt: #f4f5f7;
-  --text: #1a1d21;
-  --text-muted: #565c66;
-  --accent: #2f6f6a;
-  --accent-text: #ffffff;
-  --border: #e2e4e8;
-  --card-bg: #f9faf8;
-  --danger: #b3432f;
+  /* grounds */
+  --bg: #eff6f5;
+  --panel: #ffffff;
+  --panel-raised: #f4faf9;
+
+  /* ink */
+  --ink: #0b1a1f;
+  --ink-muted: #4c6b6c;
+  --ink-faint: #7c9998;
+
+  /* structure */
+  --border: #c9dedc;
+  --border-strong: #9cc2be;
+
+  /* accent: clinical bio-teal */
+  --accent: #0e9c87;
+  --accent-strong: #087a6a;
+  --accent-glow: rgba(14, 156, 135, 0.35);
+  --on-accent: #f4fffc;
+
+  /* semantic — deliberately distinct hues from the accent */
+  --ok: #2e9b5f;
+  --warn: #c97f1e;
+  --crit: #c94a3d;
+
+  --font-display: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --radius: 6px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #14161a;
-    --bg-alt: #1b1e23;
-    --text: #eceef1;
-    --text-muted: #a3a9b3;
-    --accent: #4fada6;
-    --accent-text: #0e1210;
-    --border: #2b2f36;
-    --card-bg: #1e2127;
-    --danger: #e0705a;
+    --bg: #060b10;
+    --panel: #0e1a20;
+    --panel-raised: #122229;
+
+    --ink: #e6f7f4;
+    --ink-muted: #7fa3a0;
+    --ink-faint: #4d6866;
+
+    --border: #1e3a3b;
+    --border-strong: #2c5252;
+
+    --accent: #22f1cb;
+    --accent-strong: #5bffdf;
+    --accent-glow: rgba(34, 241, 203, 0.35);
+    --on-accent: #04120f;
+
+    --ok: #4ade94;
+    --warn: #ffb648;
+    --crit: #ff6f61;
   }
 }
 
 * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.5;
+::selection {
+  background: var(--accent-glow);
+  color: var(--ink);
 }
 
+body {
+  margin: 0;
+  font-family: var(--font-display);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--accent-strong); }
+
 .wrap {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 auto;
   padding: 0 1.25rem;
 }
 
+/* ---------- header: instrument fascia ---------- */
+
 .app-header {
+  position: relative;
   border-bottom: 1px solid var(--border);
   padding: 1rem 0;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.app-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    var(--accent-glow) 45%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  animation: scan 9s linear infinite;
+  pointer-events: none;
+  opacity: 0.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header::after { animation: none; opacity: 0.15; }
+}
+
+@keyframes scan {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
 }
 
 .app-header .wrap {
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 1rem;
   flex-wrap: wrap;
 }
 
+.brand {
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+}
+
+.brand:hover { color: var(--accent-strong); }
+
+.title {
+  font-weight: 700;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- reminders bar: vitals strip ---------- */
+
 .reminders-bar {
-  background: var(--bg-alt);
+  background: var(--panel-raised);
   border-bottom: 1px solid var(--border);
 }
 
@@ -62,37 +155,52 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.6rem 1.25rem;
+  padding: 0.55rem 1.25rem;
   flex-wrap: wrap;
 }
 
+.status-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+.status-dot.active {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+  animation: pulse 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot.active { animation: none; }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 2px var(--accent-glow); }
+  50% { box-shadow: 0 0 0 6px transparent; }
+}
+
 #reminders-status {
-  font-size: 0.85rem;
-  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+  color: var(--ink-muted);
 }
 
-.save-btn.small {
-  margin-bottom: 0;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.85rem;
-}
-
-.brand {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-}
-
-.brand:hover { color: var(--accent); }
-
-.title {
-  font-weight: 700;
-  font-size: 1.15rem;
-}
+/* ---------- tabs: instrument selector ---------- */
 
 .tabs {
   border-bottom: 1px solid var(--border);
-  background: var(--bg-alt);
+  background: var(--panel);
   position: sticky;
   top: 0;
   z-index: 5;
@@ -100,27 +208,41 @@ body {
 
 .tabs-scroll {
   display: flex;
-  gap: 0.25rem;
+  gap: 0.15rem;
   overflow-x: auto;
-  padding: 0.5rem 1.25rem;
+  padding: 0.6rem 1.25rem;
 }
 
 .tab {
   flex: 0 0 auto;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
-  color: var(--text-muted);
-  font-size: 0.9rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
+  color: var(--ink-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius);
   cursor: pointer;
   white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.tab:hover {
+  color: var(--ink);
+  border-color: var(--border-strong);
 }
 
 .tab.active {
-  background: var(--accent);
-  color: var(--accent-text);
+  background: var(--panel-raised);
+  color: var(--accent-strong);
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-glow);
 }
+
+/* ---------- content ---------- */
 
 main.wrap {
   padding-top: 1.75rem;
@@ -132,39 +254,58 @@ main.wrap {
 
 .panel h2 {
   margin: 0 0 0.25rem;
-  font-size: 1.4rem;
+  font-size: 1.35rem;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 
 .subtitle {
-  color: var(--text-muted);
+  color: var(--ink-muted);
   margin: 0 0 1.5rem;
+  max-width: 46ch;
 }
 
 .field {
   display: block;
   margin-bottom: 1rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  font-size: 0.85rem;
+  color: var(--ink-muted);
 }
 
 .field input, .field textarea {
   display: block;
   width: 100%;
-  margin-top: 0.35rem;
+  margin-top: 0.4rem;
   padding: 0.6rem 0.7rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg);
-  color: var(--text);
+  border-radius: var(--radius);
+  background: var(--panel);
+  color: var(--ink);
   font: inherit;
   font-size: 0.95rem;
 }
 
-.field-label {
-  font-size: 0.9rem;
-  color: var(--text-muted);
-  margin: 0 0 0.5rem;
+.field input[type="date"] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
+
+.field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+
+.field-label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 0 0 0.6rem;
+}
+
+/* ---------- checklists: custom status toggles ---------- */
 
 .checklist {
   display: flex;
@@ -176,15 +317,45 @@ main.wrap {
 .checklist label {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 0.95rem;
+  gap: 0.65rem;
+  font-size: 0.94rem;
 }
 
-.checklist input[type="checkbox"] {
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
   width: 18px;
   height: 18px;
-  accent-color: var(--accent);
+  min-width: 18px;
+  border: 1.5px solid var(--border-strong);
+  border-radius: 3px;
+  background: var(--panel);
+  cursor: pointer;
+  position: relative;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
+
+input[type="checkbox"]:hover { border-color: var(--accent); }
+
+input[type="checkbox"]:checked {
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+input[type="checkbox"]:checked::after {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 1px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--on-accent);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* ---------- pills: single-select segmented readout ---------- */
 
 .pill-group {
   display: flex;
@@ -195,42 +366,71 @@ main.wrap {
 
 .pill-group button {
   border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
+  background: var(--panel);
+  color: var(--ink-muted);
   padding: 0.4rem 0.9rem;
   border-radius: 999px;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, box-shadow 0.15s;
 }
+
+.pill-group button:hover { border-color: var(--accent); color: var(--ink); }
 
 .pill-group button.selected {
   background: var(--accent);
-  color: var(--accent-text);
+  color: var(--on-accent);
   border-color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
 }
+
+/* ---------- buttons ---------- */
 
 .save-btn, .add-row-btn {
   background: var(--accent);
-  color: var(--accent-text);
+  color: var(--on-accent);
   border: none;
   padding: 0.65rem 1.2rem;
-  border-radius: 8px;
-  font-size: 0.95rem;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
   cursor: pointer;
   margin-bottom: 1.5rem;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.05s;
 }
 
+.save-btn:hover, .add-row-btn:hover {
+  background: var(--accent-strong);
+  box-shadow: 0 0 14px var(--accent-glow);
+}
+
+.save-btn:active, .add-row-btn:active { transform: translateY(1px); }
+
+.save-btn.small {
+  margin-bottom: 0;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.78rem;
+}
+
+/* ---------- cards: instrument panels ---------- */
+
 .card {
-  background: var(--card-bg);
+  position: relative;
+  background: var(--panel-raised);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-top: 2px solid var(--accent);
+  border-radius: var(--radius);
   padding: 1rem 1.2rem;
   margin-bottom: 1.25rem;
 }
 
 .card h3 {
   margin-top: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
 .week-grid {
@@ -244,16 +444,25 @@ main.wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
 }
 
 .week-grid input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: var(--accent);
 }
+
+.week-grid input[type="checkbox"]:checked::after {
+  left: 6px;
+  top: 2px;
+}
+
+/* ---------- tables: data readouts ---------- */
 
 table.log-table {
   width: 100%;
@@ -264,10 +473,15 @@ table.log-table {
 
 table.log-table th {
   text-align: left;
-  background: var(--accent);
-  color: var(--accent-text);
-  padding: 0.5rem;
-  font-size: 0.8rem;
+  background: var(--panel-raised);
+  color: var(--accent-strong);
+  border-bottom: 2px solid var(--accent);
+  padding: 0.55rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-weight: 600;
 }
 
 table.log-table td {
@@ -279,29 +493,36 @@ table.log-table input {
   width: 100%;
   border: none;
   background: transparent;
-  color: var(--text);
+  color: var(--ink);
   font: inherit;
   padding: 0.35rem;
 }
 
+table.log-table input[type="date"],
+table.log-table input:not([type]),
+table.log-table input[type="text"] {
+  font-variant-numeric: tabular-nums;
+}
+
 table.log-table input:focus {
   outline: 1px solid var(--accent);
-  border-radius: 4px;
+  border-radius: 3px;
 }
 
 table.log-table input[type="checkbox"] {
   width: 18px;
   height: 18px;
-  accent-color: var(--accent);
 }
 
 .row-remove {
   background: none;
   border: none;
-  color: var(--danger);
+  color: var(--crit);
   cursor: pointer;
   font-size: 1rem;
 }
+
+/* ---------- milestones ---------- */
 
 .milestone-list {
   display: flex;
@@ -310,20 +531,32 @@ table.log-table input[type="checkbox"] {
 }
 
 .milestone-item {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--card-bg);
+  background: var(--panel-raised);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-left: 2px solid var(--border-strong);
+  border-radius: var(--radius);
   padding: 0.7rem 0.9rem;
+  transition: border-color 0.15s;
+}
+
+.milestone-item:has(input:checked) {
+  border-left-color: var(--ok);
 }
 
 .milestone-item input[type="checkbox"] {
   width: 20px;
   height: 20px;
-  accent-color: var(--accent);
   flex-shrink: 0;
+}
+
+.milestone-item input[type="checkbox"]:checked {
+  background: var(--ok);
+  border-color: var(--ok);
+  box-shadow: 0 0 8px rgba(46, 155, 95, 0.35);
 }
 
 .milestone-item .label {
@@ -333,12 +566,16 @@ table.log-table input[type="checkbox"] {
 
 .milestone-item input[type="date"] {
   border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text-muted);
-  border-radius: 6px;
+  background: var(--panel);
+  color: var(--ink-muted);
+  border-radius: 5px;
   padding: 0.3rem 0.5rem;
-  font-size: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
 }
+
+/* ---------- history entries: log readout ---------- */
 
 .history {
   border-top: 1px solid var(--border);
@@ -346,19 +583,26 @@ table.log-table input[type="checkbox"] {
 }
 
 .history-entry {
-  background: var(--card-bg);
+  background: var(--panel-raised);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-left: 2px solid var(--accent);
+  border-radius: var(--radius);
   padding: 0.75rem 1rem;
   margin-bottom: 0.75rem;
   font-size: 0.88rem;
 }
 
 .history-entry .entry-date {
-  font-weight: 700;
-  color: var(--accent);
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+  color: var(--accent-strong);
   margin-bottom: 0.3rem;
+  font-variant-numeric: tabular-nums;
 }
+
+/* ---------- footer ---------- */
 
 .app-footer {
   border-top: 1px solid var(--border);
@@ -366,21 +610,22 @@ table.log-table input[type="checkbox"] {
 }
 
 .app-footer p {
-  color: var(--text-muted);
-  font-size: 0.8rem;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
   margin: 0;
 }
 
 .link-btn {
   background: none;
   border: none;
-  color: var(--accent);
+  color: var(--accent-strong);
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   padding: 0;
   text-decoration: underline;
+  font-family: var(--font-mono);
 }
 
 .link-btn.danger {
-  color: var(--danger);
+  color: var(--crit);
 }
