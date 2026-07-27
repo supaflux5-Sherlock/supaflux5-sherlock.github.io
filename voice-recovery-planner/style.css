@@ -26,7 +26,8 @@
   --on-accent: #f4fffc;
 
   /* semantic — deliberately distinct hues from the accent */
-  --ok: #2e9b5f;
+  --ok: #1c6feb;
+  --ok-glow: rgba(28, 111, 235, 0.35);
   --warn: #c97f1e;
   --crit: #c94a3d;
 
@@ -54,7 +55,8 @@
     --accent-glow: rgba(34, 241, 203, 0.35);
     --on-accent: #04120f;
 
-    --ok: #4ade94;
+    --ok: #4ea8ff;
+    --ok-glow: rgba(78, 168, 255, 0.35);
     --warn: #ffb648;
     --crit: #ff6f61;
   }
@@ -556,7 +558,7 @@ table.log-table input[type="checkbox"] {
 .milestone-item input[type="checkbox"]:checked {
   background: var(--ok);
   border-color: var(--ok);
-  box-shadow: 0 0 8px rgba(46, 155, 95, 0.35);
+  box-shadow: 0 0 8px var(--ok-glow);
 }
 
 .milestone-item .label {
