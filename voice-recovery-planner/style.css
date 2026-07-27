@@ -29,7 +29,7 @@
   --ok: #1c6feb;
   --ok-glow: rgba(28, 111, 235, 0.35);
   --warn: #c97f1e;
-  --crit: #c94a3d;
+  --crit: #d93a2b;
 
   --font-display: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
@@ -58,7 +58,7 @@
     --ok: #4ea8ff;
     --ok-glow: rgba(78, 168, 255, 0.35);
     --warn: #ffb648;
-    --crit: #ff6f61;
+    --crit: #ff5a48;
   }
 }
 
@@ -522,6 +522,11 @@ table.log-table input[type="checkbox"] {
   color: var(--crit);
   cursor: pointer;
   font-size: 1rem;
+  transition: text-shadow 0.15s;
+}
+
+.row-remove:hover {
+  text-shadow: 0 0 8px currentColor;
 }
 
 /* ---------- milestones ---------- */
