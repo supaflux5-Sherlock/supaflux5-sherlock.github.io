@@ -25,6 +25,7 @@
   --accent: #1b63d6;
   --accent-strong: #144fb0;
   --accent-soft: #e4edfb;
+  --accent-glow: rgba(27, 99, 214, 0.16);
   --on-accent: #ffffff;
 
   /* semantic status — reserved for real state, not decoration */
@@ -54,6 +55,7 @@
     --accent: #4d9dff;
     --accent-strong: #7ebaff;
     --accent-soft: #182a3f;
+    --accent-glow: rgba(77, 157, 255, 0.22);
     --on-accent: #05101d;
 
     --ok: #4d9dff;
@@ -89,12 +91,39 @@ a { color: var(--accent-strong); }
 /* ---------- header ---------- */
 
 .app-header {
+  position: relative;
   border-bottom: 1px solid var(--border);
   padding: 1.1rem 0;
   background: var(--panel);
+  overflow: hidden;
+}
+
+.app-header::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    transparent 0%,
+    var(--accent-glow) 45%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  animation: shimmer 10s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-header::after { animation: none; }
+}
+
+@keyframes shimmer {
+  0%, 100% { background-position: 120% 0; }
+  50% { background-position: -20% 0; }
 }
 
 .app-header .wrap {
+  position: relative;
   display: flex;
   align-items: baseline;
   gap: 1rem;
