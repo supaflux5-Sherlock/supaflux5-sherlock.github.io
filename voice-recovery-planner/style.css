@@ -25,7 +25,7 @@
   --accent: #1b63d6;
   --accent-strong: #144fb0;
   --accent-soft: #e4edfb;
-  --accent-glow: rgba(27, 99, 214, 0.16);
+  --accent-glow: rgba(27, 99, 214, 0.4);
   --on-accent: #ffffff;
 
   /* semantic status — reserved for real state, not decoration */
@@ -55,7 +55,7 @@
     --accent: #4d9dff;
     --accent-strong: #7ebaff;
     --accent-soft: #182a3f;
-    --accent-glow: rgba(77, 157, 255, 0.22);
+    --accent-glow: rgba(77, 157, 255, 0.5);
     --on-accent: #05101d;
 
     --ok: #4d9dff;
