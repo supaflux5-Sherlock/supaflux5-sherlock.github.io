@@ -1,71 +1,71 @@
 /* ============================================================
-   Voice Recovery Planner — "bedside monitor" design system
-   Palette: cool porcelain / abyss-navy grounds, bio-teal accent.
-   Type: IBM Plex Sans (display/body) + IBM Plex Mono (readouts).
+   Voice Recovery Planner — clinical patient-app design system
+   Grounded in real reference patterns (Apple Health, MyChart,
+   Philips/Masimo/Tandem device UI): crisp whites + cool blues,
+   a single purposeful accent, color as information not ornament,
+   generous plain-language typography, no decorative animation.
    ============================================================ */
 
 :root {
-  /* grounds */
-  --bg: #eff6f5;
+  /* grounds: crisp white, cool light-blue tint */
+  --bg: #f4f8fc;
   --panel: #ffffff;
-  --panel-raised: #f4faf9;
+  --panel-raised: #eef4fb;
 
   /* ink */
-  --ink: #0b1a1f;
-  --ink-muted: #4c6b6c;
-  --ink-faint: #7c9998;
+  --ink: #12202f;
+  --ink-muted: #5a6d80;
+  --ink-faint: #93a3b3;
 
   /* structure */
-  --border: #c9dedc;
-  --border-strong: #9cc2be;
+  --border: #d7e2ee;
+  --border-strong: #aec2d6;
 
-  /* accent: clinical blue */
+  /* accent: single clinical blue, used purposefully */
   --accent: #1b63d6;
   --accent-strong: #144fb0;
-  --accent-glow: rgba(27, 99, 214, 0.35);
-  --on-accent: #f4f9ff;
+  --accent-soft: #e4edfb;
+  --on-accent: #ffffff;
 
-  /* semantic — ok reuses the blue family; warn/crit stay distinct */
-  --ok: #1c6feb;
-  --ok-glow: rgba(28, 111, 235, 0.35);
-  --warn: #c97f1e;
-  --crit: #d93a2b;
+  /* semantic status — reserved for real state, not decoration */
+  --ok: #1b63d6;
+  --warn: #b5750f;
+  --crit: #c62f22;
 
   --font-display: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --radius: 6px;
+  --radius: 10px;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #060b10;
-    --panel: #0e1a20;
-    --panel-raised: #122229;
+    --bg: #0d1420;
+    --panel: #141d2b;
+    --panel-raised: #1a2534;
 
-    --ink: #e6f7f4;
-    --ink-muted: #7fa3a0;
-    --ink-faint: #4d6866;
+    --ink: #e8eef5;
+    --ink-muted: #8fa1b3;
+    --ink-faint: #56687a;
 
-    --border: #1e3a3b;
-    --border-strong: #2c5252;
+    --border: #29394c;
+    --border-strong: #3c5065;
 
-    --accent: #4fa8ff;
-    --accent-strong: #7cc4ff;
-    --accent-glow: rgba(79, 168, 255, 0.35);
-    --on-accent: #041224;
+    --accent: #4d9dff;
+    --accent-strong: #7ebaff;
+    --accent-soft: #182a3f;
+    --on-accent: #05101d;
 
-    --ok: #4ea8ff;
-    --ok-glow: rgba(78, 168, 255, 0.35);
-    --warn: #ffb648;
-    --crit: #ff5a48;
+    --ok: #4d9dff;
+    --warn: #e0a340;
+    --crit: #ee6a5c;
   }
 }
 
 * { box-sizing: border-box; }
 
 ::selection {
-  background: var(--accent-glow);
+  background: var(--accent-soft);
   color: var(--ink);
 }
 
@@ -74,7 +74,7 @@ body {
   font-family: var(--font-display);
   background: var(--bg);
   color: var(--ink);
-  line-height: 1.55;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -86,43 +86,15 @@ a { color: var(--accent-strong); }
   padding: 0 1.25rem;
 }
 
-/* ---------- header: instrument fascia ---------- */
+/* ---------- header ---------- */
 
 .app-header {
-  position: relative;
   border-bottom: 1px solid var(--border);
-  padding: 1rem 0;
-  overflow: hidden;
+  padding: 1.1rem 0;
   background: var(--panel);
 }
 
-.app-header::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 0%,
-    var(--accent-glow) 45%,
-    transparent 60%
-  );
-  background-size: 250% 100%;
-  animation: scan 9s linear infinite;
-  pointer-events: none;
-  opacity: 0.55;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .app-header::after { animation: none; opacity: 0.15; }
-}
-
-@keyframes scan {
-  0% { background-position: 120% 0; }
-  100% { background-position: -120% 0; }
-}
-
 .app-header .wrap {
-  position: relative;
   display: flex;
   align-items: baseline;
   gap: 1rem;
@@ -132,20 +104,18 @@ a { color: var(--accent-strong); }
 .brand {
   color: var(--ink-muted);
   text-decoration: none;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.03em;
+  font-size: 0.85rem;
 }
 
 .brand:hover { color: var(--accent-strong); }
 
 .title {
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   letter-spacing: -0.01em;
 }
 
-/* ---------- reminders bar: vitals strip ---------- */
+/* ---------- reminders bar ---------- */
 
 .reminders-bar {
   background: var(--panel-raised);
@@ -157,48 +127,34 @@ a { color: var(--accent-strong); }
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.55rem 1.25rem;
+  padding: 0.6rem 1.25rem;
   flex-wrap: wrap;
 }
 
 .status-line {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
 }
 
 .status-dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
   background: var(--ink-faint);
-  box-shadow: none;
   flex-shrink: 0;
 }
 
 .status-dot.active {
   background: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
-  animation: pulse 2.2s ease-in-out infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .status-dot.active { animation: none; }
-}
-
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 2px var(--accent-glow); }
-  50% { box-shadow: 0 0 0 6px transparent; }
 }
 
 #reminders-status {
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  letter-spacing: 0.01em;
+  font-size: 0.85rem;
   color: var(--ink-muted);
 }
 
-/* ---------- tabs: instrument selector ---------- */
+/* ---------- tabs ---------- */
 
 .tabs {
   border-bottom: 1px solid var(--border);
@@ -210,7 +166,7 @@ a { color: var(--accent-strong); }
 
 .tabs-scroll {
   display: flex;
-  gap: 0.15rem;
+  gap: 0.3rem;
   overflow-x: auto;
   padding: 0.6rem 1.25rem;
 }
@@ -220,34 +176,30 @@ a { color: var(--accent-strong); }
   border: 1px solid transparent;
   background: transparent;
   color: var(--ink-muted);
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
+  font-size: 0.88rem;
   font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 0.45rem 0.8rem;
-  border-radius: var(--radius);
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  transition: color 0.15s, background 0.15s;
 }
 
 .tab:hover {
   color: var(--ink);
-  border-color: var(--border-strong);
+  background: var(--panel-raised);
 }
 
 .tab.active {
-  background: var(--panel-raised);
+  background: var(--accent-soft);
   color: var(--accent-strong);
-  border-color: var(--accent);
-  box-shadow: inset 0 0 0 1px var(--accent-glow);
+  font-weight: 600;
 }
 
 /* ---------- content ---------- */
 
 main.wrap {
-  padding-top: 1.75rem;
+  padding-top: 1.85rem;
   padding-bottom: 2.5rem;
 }
 
@@ -255,22 +207,22 @@ main.wrap {
 .panel.active { display: block; }
 
 .panel h2 {
-  margin: 0 0 0.25rem;
-  font-size: 1.35rem;
+  margin: 0 0 0.3rem;
+  font-size: 1.5rem;
   letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
 .subtitle {
   color: var(--ink-muted);
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.75rem;
   max-width: 46ch;
 }
 
 .field {
   display: block;
-  margin-bottom: 1rem;
-  font-size: 0.85rem;
+  margin-bottom: 1.1rem;
+  font-size: 0.9rem;
   color: var(--ink-muted);
 }
 
@@ -278,63 +230,60 @@ main.wrap {
   display: block;
   width: 100%;
   margin-top: 0.4rem;
-  padding: 0.6rem 0.7rem;
+  padding: 0.65rem 0.75rem;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: 8px;
   background: var(--panel);
   color: var(--ink);
   font: inherit;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .field input[type="date"] {
-  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 
 .field input:focus, .field textarea:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px var(--accent-glow);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .field-label {
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 0.85rem;
+  font-weight: 600;
   color: var(--ink-muted);
-  margin: 0 0 0.6rem;
+  margin: 0 0 0.65rem;
 }
 
-/* ---------- checklists: custom status toggles ---------- */
+/* ---------- checklists ---------- */
 
 .checklist {
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
-  margin-bottom: 1.25rem;
+  gap: 0.7rem;
+  margin-bottom: 1.4rem;
 }
 
 .checklist label {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
-  font-size: 0.94rem;
+  gap: 0.7rem;
+  font-size: 0.98rem;
 }
 
 input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
-  width: 18px;
-  height: 18px;
-  min-width: 18px;
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
   border: 1.5px solid var(--border-strong);
-  border-radius: 3px;
+  border-radius: 5px;
   background: var(--panel);
   cursor: pointer;
   position: relative;
-  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s, background 0.15s;
 }
 
 input[type="checkbox"]:hover { border-color: var(--accent); }
@@ -342,39 +291,38 @@ input[type="checkbox"]:hover { border-color: var(--accent); }
 input[type="checkbox"]:checked {
   background: var(--accent);
   border-color: var(--accent);
-  box-shadow: 0 0 8px var(--accent-glow);
 }
 
 input[type="checkbox"]:checked::after {
   content: "";
   position: absolute;
-  left: 5px;
-  top: 1px;
+  left: 6px;
+  top: 2px;
   width: 5px;
-  height: 9px;
+  height: 10px;
   border: solid var(--on-accent);
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
 
-/* ---------- pills: single-select segmented readout ---------- */
+/* ---------- pills: single-select ---------- */
 
 .pill-group {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1.4rem;
 }
 
 .pill-group button {
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--ink-muted);
-  padding: 0.4rem 0.9rem;
+  padding: 0.45rem 1rem;
   border-radius: 999px;
-  font-size: 0.82rem;
+  font-size: 0.88rem;
   cursor: pointer;
-  transition: border-color 0.15s, color 0.15s, box-shadow 0.15s;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
 }
 
 .pill-group button:hover { border-color: var(--accent); color: var(--ink); }
@@ -383,7 +331,7 @@ input[type="checkbox"]:checked::after {
   background: var(--accent);
   color: var(--on-accent);
   border-color: var(--accent);
-  box-shadow: 0 0 10px var(--accent-glow);
+  font-weight: 600;
 }
 
 /* ---------- buttons ---------- */
@@ -392,47 +340,42 @@ input[type="checkbox"]:checked::after {
   background: var(--accent);
   color: var(--on-accent);
   border: none;
-  padding: 0.65rem 1.2rem;
-  border-radius: var(--radius);
-  font-size: 0.9rem;
+  padding: 0.7rem 1.3rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   margin-bottom: 1.5rem;
-  transition: background 0.15s, box-shadow 0.15s, transform 0.05s;
+  transition: background 0.15s, transform 0.05s;
 }
 
 .save-btn:hover, .add-row-btn:hover {
   background: var(--accent-strong);
-  box-shadow: 0 0 14px var(--accent-glow);
 }
 
 .save-btn:active, .add-row-btn:active { transform: translateY(1px); }
 
 .save-btn.small {
   margin-bottom: 0;
-  padding: 0.4rem 0.9rem;
-  font-size: 0.78rem;
+  padding: 0.45rem 1rem;
+  font-size: 0.85rem;
 }
 
-/* ---------- cards: instrument panels ---------- */
+/* ---------- cards ---------- */
 
 .card {
-  position: relative;
-  background: var(--panel-raised);
+  background: var(--panel);
   border: 1px solid var(--border);
-  border-top: 2px solid var(--accent);
   border-radius: var(--radius);
-  padding: 1rem 1.2rem;
+  padding: 1.1rem 1.3rem;
   margin-bottom: 1.25rem;
 }
 
 .card h3 {
   margin-top: 0;
-  font-size: 0.95rem;
-  font-family: var(--font-mono);
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .week-grid {
@@ -447,42 +390,35 @@ input[type="checkbox"]:checked::after {
   flex-direction: column;
   align-items: center;
   gap: 0.4rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
+  font-size: 0.75rem;
   color: var(--ink-muted);
 }
 
 .week-grid input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
 }
 
 .week-grid input[type="checkbox"]:checked::after {
-  left: 6px;
-  top: 2px;
+  left: 7px;
+  top: 3px;
 }
 
-/* ---------- tables: data readouts ---------- */
+/* ---------- tables ---------- */
 
 table.log-table {
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 1rem;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
 }
 
 table.log-table th {
   text-align: left;
   background: var(--panel-raised);
-  color: var(--accent-strong);
-  border-bottom: 2px solid var(--accent);
-  padding: 0.55rem 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  color: var(--ink-muted);
+  padding: 0.6rem 0.55rem;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
@@ -497,7 +433,7 @@ table.log-table input {
   background: transparent;
   color: var(--ink);
   font: inherit;
-  padding: 0.35rem;
+  padding: 0.4rem;
 }
 
 table.log-table input[type="date"],
@@ -521,12 +457,7 @@ table.log-table input[type="checkbox"] {
   border: none;
   color: var(--crit);
   cursor: pointer;
-  font-size: 1rem;
-  transition: text-shadow 0.15s;
-}
-
-.row-remove:hover {
-  text-shadow: 0 0 8px currentColor;
+  font-size: 1.05rem;
 }
 
 /* ---------- milestones ---------- */
@@ -538,51 +469,42 @@ table.log-table input[type="checkbox"] {
 }
 
 .milestone-item {
-  position: relative;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  background: var(--panel-raised);
+  gap: 0.8rem;
+  background: var(--panel);
   border: 1px solid var(--border);
-  border-left: 2px solid var(--border-strong);
   border-radius: var(--radius);
-  padding: 0.7rem 0.9rem;
-  transition: border-color 0.15s;
+  padding: 0.8rem 1rem;
 }
 
 .milestone-item:has(input:checked) {
-  border-left-color: var(--ok);
+  background: var(--accent-soft);
+  border-color: var(--accent);
 }
 
 .milestone-item input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   flex-shrink: 0;
-}
-
-.milestone-item input[type="checkbox"]:checked {
-  background: var(--ok);
-  border-color: var(--ok);
-  box-shadow: 0 0 8px var(--ok-glow);
 }
 
 .milestone-item .label {
   flex: 1;
-  font-size: 0.92rem;
+  font-size: 0.96rem;
 }
 
 .milestone-item input[type="date"] {
   border: 1px solid var(--border);
   background: var(--panel);
   color: var(--ink-muted);
-  border-radius: 5px;
-  padding: 0.3rem 0.5rem;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
+  border-radius: 6px;
+  padding: 0.35rem 0.55rem;
+  font-size: 0.82rem;
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- history entries: log readout ---------- */
+/* ---------- history entries ---------- */
 
 .history {
   border-top: 1px solid var(--border);
@@ -590,20 +512,17 @@ table.log-table input[type="checkbox"] {
 }
 
 .history-entry {
-  background: var(--panel-raised);
+  background: var(--panel);
   border: 1px solid var(--border);
-  border-left: 2px solid var(--accent);
   border-radius: var(--radius);
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.1rem;
   margin-bottom: 0.75rem;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
 }
 
 .history-entry .entry-date {
-  font-family: var(--font-mono);
-  font-weight: 600;
-  font-size: 0.8rem;
-  letter-spacing: 0.03em;
+  font-weight: 700;
+  font-size: 0.85rem;
   color: var(--accent-strong);
   margin-bottom: 0.3rem;
   font-variant-numeric: tabular-nums;
@@ -618,7 +537,7 @@ table.log-table input[type="checkbox"] {
 
 .app-footer p {
   color: var(--ink-muted);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   margin: 0;
 }
 
@@ -627,10 +546,9 @@ table.log-table input[type="checkbox"] {
   border: none;
   color: var(--accent-strong);
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   padding: 0;
   text-decoration: underline;
-  font-family: var(--font-mono);
 }
 
 .link-btn.danger {
